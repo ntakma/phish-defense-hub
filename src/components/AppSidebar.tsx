@@ -1,5 +1,4 @@
-
-import { Shield, BarChart3, Users, Mail, Target, Home } from "lucide-react";
+import { Shield, BarChart3, Users, Mail, Target, Home, Wrench } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -14,6 +13,7 @@ import {
 
 const menuItems = [
   { title: "Tổng quan", url: "/", icon: Home },
+  { title: "Quản lý công cụ", url: "/tools", icon: Wrench },
   { title: "Kịch bản Phishing", url: "/scenarios", icon: Shield },
   { title: "Đối tượng mục tiêu", url: "/targets", icon: Users },
   { title: "Chiến dịch", url: "/campaigns", icon: Target },
