@@ -12,6 +12,7 @@ import { ScenarioManagement } from "@/components/ScenarioManagement";
 import { TargetManagement } from "@/components/TargetManagement";
 import { CampaignExecution } from "@/components/CampaignExecution";
 import { ReportsAnalytics } from "@/components/ReportsAnalytics";
+import { AttackToolsManagement } from "@/components/AttackToolsManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,7 +24,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <SidebarProvider>
-          <div className="min-h-screen flex w-full bg-gray-50">
+          <div className="min-h-screen flex w-full">
             <AppSidebar />
             <div className="flex-1 flex flex-col">
               <Header />
@@ -33,6 +34,7 @@ const App = () => (
                   <Route path="/scenarios" element={<ScenarioManagement />} />
                   <Route path="/targets" element={<TargetManagement />} />
                   <Route path="/campaigns" element={<CampaignExecution />} />
+                  <Route path="/tools" element={<AttackToolsManagement />} />
                   <Route path="/reports" element={<ReportsAnalytics />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
