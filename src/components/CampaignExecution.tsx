@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Plus, Play, Pause, Stop, Eye, Calendar, Users, Mail, MessageSquare, Phone } from "lucide-react";
+import { Plus, Play, Pause, Square, Eye, Calendar, Users, Mail, MessageSquare, Phone } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
@@ -378,7 +378,7 @@ export function CampaignExecution() {
                           onClick={() => handleCampaignAction(campaign.id, 'stop')}
                           className="text-red-600 hover:text-red-700"
                         >
-                          <Stop className="h-4 w-4" />
+                          <Square className="h-4 w-4" />
                         </Button>
                       </>
                     )}
