@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Upload, Download, Search, Filter, Edit, Trash2, Users } from "lucide-react";
+import { Plus, Upload, Download, Search, Filter, Edit, Trash2, Users, Database, Globe } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
@@ -20,7 +19,8 @@ const mockTargets = [
     riskLevel: "low",
     lastCampaign: "2024-06-20",
     interactions: 3,
-    compromised: 0
+    compromised: 0,
+    source: "manual"
   },
   {
     id: 2,
@@ -31,7 +31,8 @@ const mockTargets = [
     riskLevel: "high",
     lastCampaign: "2024-06-18",
     interactions: 8,
-    compromised: 3
+    compromised: 3,
+    source: "linkedin-api"
   },
   {
     id: 3,
@@ -42,7 +43,8 @@ const mockTargets = [
     riskLevel: "medium",
     lastCampaign: "2024-06-15",
     interactions: 5,
-    compromised: 1
+    compromised: 1,
+    source: "facebook-api"
   },
   {
     id: 4,
@@ -53,13 +55,15 @@ const mockTargets = [
     riskLevel: "low",
     lastCampaign: "2024-06-22",
     interactions: 2,
-    compromised: 0
+    compromised: 0,
+    source: "file-import"
   }
 ];
 
 export function TargetManagement() {
   const [targets, setTargets] = useState(mockTargets);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isDataSourceDialogOpen, setIsDataSourceDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRisk, setFilterRisk] = useState("all");
   const [formData, setFormData] = useState({
@@ -84,6 +88,26 @@ export function TargetManagement() {
       case "medium": return "Trung bình";
       case "low": return "Thấp";
       default: return "Không xác định";
+    }
+  };
+
+  const getSourceIcon = (source) => {
+    switch (source) {
+      case "manual": return <Users className="h-4 w-4" />;
+      case "linkedin-api": return <Globe className="h-4 w-4" />;
+      case "facebook-api": return <Globe className="h-4 w-4" />;
+      case "file-import": return <Upload className="h-4 w-4" />;
+      default: return <Database className="h-4 w-4" />;
+    }
+  };
+
+  const getSourceLabel = (source) => {
+    switch (source) {
+      case "manual": return "Thủ công";
+      case "linkedin-api": return "LinkedIn API";
+      case "facebook-api": return "Facebook API";
+      case "file-import": return "Nhập file";
+      default: return "Khác";
     }
   };
 
@@ -114,7 +138,8 @@ export function TargetManagement() {
       riskLevel: "low",
       lastCampaign: null,
       interactions: 0,
-      compromised: 0
+      compromised: 0,
+      source: "manual"
     };
 
     setTargets([...targets, newTarget]);
@@ -147,6 +172,13 @@ export function TargetManagement() {
     });
   };
 
+  const handleImportFromDataSource = () => {
+    toast({
+      title: "Thu thập dữ liệu",
+      description: "Đã bắt đầu thu thập dữ liệu từ các nguồn đã cấu hình"
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -159,6 +191,11 @@ export function TargetManagement() {
           <Button variant="outline" onClick={handleBulkImport}>
             <Upload className="h-4 w-4 mr-2" />
             Nhập từ file
+          </Button>
+
+          <Button variant="outline" onClick={handleImportFromDataSource}>
+            <Database className="h-4 w-4 mr-2" />
+            Thu thập từ nguồn dữ liệu
           </Button>
           
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
@@ -332,6 +369,7 @@ export function TargetManagement() {
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Email</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Phòng ban</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Mức độ rủi ro</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Nguồn dữ liệu</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Tương tác</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Bị khai thác</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-700">Thao tác</th>
@@ -352,6 +390,12 @@ export function TargetManagement() {
                       <Badge className={`${getRiskColor(target.riskLevel)} text-white`}>
                         {getRiskLabel(target.riskLevel)}
                       </Badge>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center text-sm text-gray-600">
+                        {getSourceIcon(target.source)}
+                        <span className="ml-2">{getSourceLabel(target.source)}</span>
+                      </div>
                     </td>
                     <td className="py-3 px-4 text-sm text-gray-900">{target.interactions}</td>
                     <td className="py-3 px-4 text-sm text-gray-900">{target.compromised}</td>

@@ -13,6 +13,7 @@ import { TargetManagement } from "@/components/TargetManagement";
 import { CampaignExecution } from "@/components/CampaignExecution";
 import { ReportsAnalytics } from "@/components/ReportsAnalytics";
 import { AttackToolsManagement } from "@/components/AttackToolsManagement";
+import { DataSourceManagement } from "@/components/DataSourceManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
                   <Route path="/targets" element={<TargetManagement />} />
                   <Route path="/campaigns" element={<CampaignExecution />} />
                   <Route path="/tools" element={<AttackToolsManagement />} />
+                  <Route path="/data-sources" element={<DataSourceManagement />} />
                   <Route path="/reports" element={<ReportsAnalytics />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
